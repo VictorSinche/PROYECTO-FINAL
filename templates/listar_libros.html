@@ -1,0 +1,47 @@
+<!-- templates/listar_libros.html -->
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-2xl font-semibold mb-6">📚 Lista de Libros Registrados</h2>
+{% if libros %}
+<table class="min-w-full bg-white border border-gray-300 rounded">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="text-left py-2 px-4 border-b">#</th>
+      <th class="text-left py-2 px-4 border-b">Título</th>
+      <th class="text-left py-2 px-4 border-b">Autor</th>
+      <th class="text-left py-2 px-4 border-b">Año</th>
+      <th class="text-left py-2 px-4 border-b">Editorial</th>
+      <th class="text-left py-2 px-4 border-b">Categoría</th>
+      <th class="text-left py-2 px-4 border-b">Stock</th>
+      <th class="text-left py-2 px-4 border-b">Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for l in libros %}
+    <tr class="border-b hover:bg-gray-50">
+      <td class="py-2 px-4">{{ l.get_id() }}</td>
+      <td class="py-2 px-4">{{ l.get_titulo() }}</td>
+      <td class="py-2 px-4">{{ l.get_autor() }}</td>
+      <td class="py-2 px-4">{{ l.get_anio() }}</td>
+      <td class="py-2 px-4">{{ l.get_editorial() }}</td>
+      <td class="py-2 px-4">
+        <span class="inline-block bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-sm">
+          {{ l.get_categoria() or 'Sin categoría' }}
+        </span>
+      </td>
+      <td class="py-2 px-4 text-center">{{ l.get_stock_disponible() }}/{{ l.get_stock_total() }}</td>
+      <td class="py-2 px-4">
+        {% if l.get_stock_disponible() > 0 %}
+          <span class="inline-block bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Disponible</span>
+        {% else %}
+          <span class="inline-block bg-red-100 text-red-800 px-2 py-1 rounded text-sm">Agotado</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+  <p>No hay libros registrados.</p>
+{% endif %}
+{% endblock %}

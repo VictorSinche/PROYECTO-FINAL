@@ -1,0 +1,41 @@
+<!-- templates/registrar_prestamo.html -->
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-2xl font-semibold mb-6">📗 Registrar Préstamo</h2>
+<form method="POST" class="bg-white p-6 rounded shadow-md">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block">Usuario</label>
+      <select name="usuario_id" required class="w-full mt-1 border rounded px-3 py-2">
+        {% for u in usuarios %}
+        <option value="{{ loop.index0 }}">{{ u.get_nombre() }} ({{ u.tipo() }})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label class="block">Libro</label>
+      <select name="libro_id" required class="w-full mt-1 border rounded px-3 py-2">
+        {% for l in libros %}
+        {% if l.get_stock_disponible() > 0 %}
+        <option value="{{ loop.index0 }}">{{ l.get_titulo() }} ({{ l.get_stock_disponible() }})</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label class="block">Fecha límite de devolución</label>
+      <input type="date" name="fecha_limite" required
+            class="w-full mt-1 border rounded px-3 py-2"
+            min="{{ hoy }}">
+    </div>
+  </div>
+  <div class="mt-6">
+    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+      Registrar Préstamo
+    </button>
+  </div>
+  {% if mensaje %}
+  <p class="mt-4 text-green-700">{{ mensaje }}</p>
+  {% endif %}
+</form>
+{% endblock %}

@@ -1,0 +1,88 @@
+<!-- templates/registrar_usuario.html -->
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-2xl font-semibold mb-6">👤 Registrar Usuario</h2>
+{% if mensaje %}
+  <div class="p-4 bg-green-100 border border-green-400 text-green-800 rounded mb-4">
+    {{ mensaje }}
+  </div>
+{% endif %}
+<form action="/registrar-usuario" method="POST" class="space-y-4">
+  <div class="grid md:grid-cols-2 gap-4">
+    <div>
+      <label class="block font-medium">Nombres</label>
+      <input type="text" name="nombres" class="w-full border border-gray-300 rounded px-3 py-2" required>
+    </div>
+    <div>
+      <label class="block font-medium">Apellidos</label>
+      <input type="text" name="apellidos" class="w-full border border-gray-300 rounded px-3 py-2" required>
+    </div>
+    <div>
+      <label class="block font-medium">DNI</label>
+      <input type="text" name="dni" class="w-full border border-gray-300 rounded px-3 py-2" required>
+    </div>
+    <div>
+      <label class="block font-medium">Email</label>
+      <input type="email" name="email" class="w-full border border-gray-300 rounded px-3 py-2" required>
+    </div>
+    <div>
+      <label class="block font-medium">Teléfono</label>
+      <input type="text" name="telefono" class="w-full border border-gray-300 rounded px-3 py-2">
+    </div>
+    <div>
+      <label class="block font-medium">Tipo de Usuario</label>
+      <select name="tipo" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        <option value="">Seleccione...</option>
+        <option value="estudiante">Estudiante</option>
+        <option value="profesor">Profesor</option>
+        <option value="bibliotecario">Bibliotecario</option>
+      </select>
+    </div>
+  </div>
+  <!-- Campos adicionales por tipo -->
+  <div id="extra-fields" class="grid grid-cols-1 gap-4 mt-4"></div>
+
+  <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+    Registrar
+  </button>
+</form>
+
+<script>
+// Script para mostrar campos adicionales según tipo de usuario
+const tipoSelect = document.querySelector('select[name="tipo"]');
+const extraFields = document.getElementById('extra-fields');
+
+tipoSelect.addEventListener('change', (e) => {
+  const tipo = e.target.value;
+  let html = '';
+  if (tipo === 'estudiante') {
+    html = `
+      <div>
+        <label class="block font-medium">Código Universitario</label>
+        <input type="text" name="codigo" class="w-full border border-gray-300 rounded px-3 py-2">
+      </div>
+      <div>
+        <label class="block font-medium">Escuela</label>
+        <input type="text" name="escuela" class="w-full border border-gray-300 rounded px-3 py-2">
+      </div>`;
+  } else if (tipo === 'profesor') {
+    html = `
+      <div>
+        <label class="block font-medium">Categoría</label>
+        <input type="text" name="categoria" class="w-full border border-gray-300 rounded px-3 py-2">
+      </div>
+      <div>
+        <label class="block font-medium">Departamento</label>
+        <input type="text" name="departamento" class="w-full border border-gray-300 rounded px-3 py-2">
+      </div>`;
+  } else if (tipo === 'bibliotecario') {
+    html = `
+      <div>
+        <label class="block font-medium">Turno</label>
+        <input type="text" name="turno" class="w-full border border-gray-300 rounded px-3 py-2">
+      </div>`;
+  }
+  extraFields.innerHTML = html;
+});
+</script>
+{% endblock %}

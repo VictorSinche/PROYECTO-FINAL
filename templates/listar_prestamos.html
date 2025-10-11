@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="p-6">
+  <h1 class="text-2xl font-bold mb-4">📚 Lista de Préstamos</h1>
+
+  {% if prestamos %}
+  <table class="min-w-full border border-gray-300 text-sm">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="px-4 py-2 border">#</th>
+        <th class="px-4 py-2 border">Usuario</th>
+        <th class="px-4 py-2 border">Tipo</th>
+        <th class="px-4 py-2 border">Libro</th>
+        <th class="px-4 py-2 border">Fecha límite</th>
+        <th class="px-4 py-2 border">Mora (S/)</th>
+        <th class="px-4 py-2 border">Fecha</th>
+        <th class="px-4 py-2 border">Fecha devolución</th>
+        <th class="px-4 py-2 border">Estado</th>
+        <th class="px-4 py-2 border">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in prestamos %}
+      <tr class="border-b hover:bg-gray-50">
+        <td class="px-4 py-2 text-center">{{ loop.index }}</td>
+        <td class="px-4 py-2 text-center">{{ p.get_usuario().get_nombres() }} {{ p.get_usuario().get_apellidos() }}</td>
+        <td class="px-4 py-2 text-center" >{{ p.get_usuario().tipo() }}</td>
+        <td class="px-4 py-2 text-center">{{ p.get_libro().get_titulo() }}</td>
+        <td class="px-4 py-2 text-center">
+        {{ p.get_fecha_limite().strftime('%d/%m/%Y') }}
+        </td>
+        <td class="px-4 py-2 text-center">
+            {% if p.get_monto_mora() > 0 %}
+                <span class="text-red-600 font-bold">{{ '%.2f'|format(p.get_monto_mora()) }}</span>
+            {% else %}
+                No tiene mora aun
+            {% endif %}
+        </td>
+        <td class="px-4 py-2 text-center">  {{ p.get_fecha_prestamo().strftime('%d/%m/%Y %H:%M:%S') }}</td>
+        <td class="px-4 py-2 text-center">
+        {% if p.get_fecha_devolucion() %}
+            {{ p.get_fecha_devolucion().strftime('%d/%m/%Y %H:%M:%S') }}
+        {% else %}
+            -
+        {% endif %}
+        </td>
+
+
+        <td class="px-4 py-2 text-center">
+          {% if p.get_estado() == "prestado" %}
+            <span class="text-yellow-600 font-semibold">Prestado</span>
+          {% else %}
+            <span class="text-green-600 font-semibold">Devuelto</span>
+          {% endif %}
+        </td>
+
+        <td class="px-4 py-2 text-center">
+            {% if p.get_estado() == "prestado" %}
+                <a href="/devolver/{{ p.get_id() }}" class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded">
+                Devolver
+                </a>
+            {% else %}
+                <span class="text-green-600 font-semibold">Devuelto</span>
+            {% endif %}
+        </td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="text-gray-600">No hay préstamos registrados.</p>
+  {% endif %}
+</div>
+{% endblock %}

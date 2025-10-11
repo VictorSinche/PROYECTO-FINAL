@@ -1,0 +1,18 @@
+<!-- templates/home.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container mx-auto mt-10">
+  <h1 class="text-3xl font-bold mb-6">Bienvenido al Sistema de Biblioteca</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <a href="/registrar-usuario" class="p-6 bg-blue-100 rounded shadow hover:bg-blue-200">
+      Registrar Usuario
+    </a>
+    <a href="/prestar" class="p-6 bg-green-100 rounded shadow hover:bg-green-200">
+      Registrar Préstamo
+    </a>
+    <a href="/listar-prestamos" class="p-6 bg-yellow-100 rounded shadow hover:bg-yellow-200">
+      Ver Préstamos
+    </a>
+  </div>
+</div>
+{% endblock %}

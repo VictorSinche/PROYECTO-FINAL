@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Biblioteca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TailwindCSS vía CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 p-5">
+      <h1 class="text-xl font-bold mb-6">📚 Biblioteca UMA</h1>
+      <nav class="space-y-3">
+        <a href="/" class="block px-3 py-2 rounded hover:bg-blue-100">🏠 Inicio</a>
+        <a href="/registrar-usuario" class="block px-3 py-2 rounded hover:bg-blue-100">👤 Registrar Usuario</a>
+        <a href="/listar-usuarios" class="block px-3 py-2 rounded hover:bg-blue-100">👥 Ver Usuarios</a>
+        <a href="/registrar-libro" class="block px-3 py-2 rounded hover:bg-blue-100">📘 Registrar Libro</a>
+        <a href="/listar-libros" class="block px-3 py-2 rounded hover:bg-blue-100">📚 Ver Libros</a>
+        <a href="/registrar-prestamo" class="block px-3 py-2 rounded hover:bg-blue-100">📗 Registrar Préstamo</a>
+        <a href="/listar-prestamos" class="block px-3 py-2 rounded hover:bg-blue-100">📋 Ver Préstamos</a>
+        <a href="/morosos" class="block px-3 py-2 rounded hover:bg-blue-100">💰 Morosos</a>
+      </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="flex-1 p-10">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+</body>
+</html>
