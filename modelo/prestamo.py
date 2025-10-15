@@ -9,7 +9,6 @@ class Prestamo:
         self._usuario = usuario
         self._libro = libro
         self._fecha_prestamo = fecha_prestamo or datetime.now()
-        # ✅ Si el usuario no define fecha límite, se calcula automáticamente (+7 días)
         self._fecha_limite = fecha_limite or (self._fecha_prestamo + timedelta(days=dias_plazo))
         self._fecha_devolucion = None
         self._estado = "prestado"
